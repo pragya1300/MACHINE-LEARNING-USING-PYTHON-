@@ -257,17 +257,69 @@ duplicating a variable,beacause
 multicollinearity the model cannt distinguish the both effect,the real problem is u cannt have constant and both dumy variable at a time it is not possible .
 if u have 99 different state then include 98 ,if u have 6 include only 5.
 
-WHAT IS P-VALUE
-????
+*WHAT IS P-VALUE????
+
 H0 IS THE AGAINST EVIDENCE
 H1 IS THE EVIDENCE WE TRY TO PROVE
-significance level is p value is low then null hypothesis then it will reject
+significance level is p value is low then null hypothesis then it will reject.
+p large we do not reject the null hypothesis.
+p value tells the evidance .
 
+*Building a model:
 
+Before we have only one dependent and one independent variable. 
+now we have so many of columns are potential predictors for a dependent variables.there are so many and we have to decide the column which to keep and which to throw.
+
+garbage in and garbage out wont be reliable and became garbage model ,and u have to describe them all.
+we have to keep the important one.
+
+*5 methods of building model:
+
+all in
+backward elimination       //step wise regression
+forward selection.         //step wise regression
+bidirectional elimination  //step wise regression
+score comparision
+
+*all-in
+
+prior knowledge,you have to to use specific variables,preparing for backward elimination.
+
+*backward elimination
+
+step1: select a significance model to stay in model(eg : sl=0.05).
+step2: fit the full model with all possible predicators.
+step3: consider the predictor with the highest p-value it p>sl ,go to next step otherwise go to fin.
+step4: remove the predictor.
+step5: fit model ithout this variable.
+
+*forward selection
+
+step1: select a significance model to stay in model(eg : sl=0.05).
+step2: fit all simple regression models y~xn .select the one with the lowest p-value.
+step3: keep this varable and fit all possible models with one extr predictor added to the one(S) you already have.
+step4: consider te predictor with the lowest p-value. If, p<sl ,go to step3 ,otherwise go to fin.
+
+you dont keep the current model keep previous model.
+
+*bidirectional elimination
+
+step1: select a significance model to stay in model(eg : SLENTER=0.05, SLSTAY=0.05).
+step2: perform the next step of the forwaed selection(new variables must have: P<SLENTER to enter).
+step3: perform all the step of backward elimination(old variable must have P<SLSTAY to stay).
+step4: no new variable. can enter and no old variable can exit.
+
+ *all possible models
  
-
-
-
+ step1: slect a criterion of goodness of fit.
+ step2: construct all possible regrssion models:(2^n)-1 total combinations.
+ step3: select the one with best criterion.
+ 
+ example:
+ 10 columns means 1023 models.
+ throwing everything in no of models incrase exponentially,its very resource consuming .
+ so we have total 5 models for building a model.
+ we usebackward elimination as it is efficient enough.
  
 
 
