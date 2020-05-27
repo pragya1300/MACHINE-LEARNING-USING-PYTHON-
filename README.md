@@ -321,10 +321,157 @@ step4: no new variable. can enter and no old variable can exit.
  so we have total 5 models for building a model.
  we usebackward elimination as it is efficient enough.
  
+In which startup to invest having an dataset for eg : of 50companies as we have discussed above.
+
+we check all the columns that they are having numerical values and having no missing data.
+check independent and dependent variable.
+and if there is any column having not numerical variable having state names, x y and z.
+we have to encode them into categorial variable.
+look your dataset if it is no long and if it is long then check it by data preprocessing tool kit.
+
+start with multiple linear regression
+ 
+# Importing the libraries
+
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+
+# Importing the dataset
+
+dataset = pd.read_csv('50_Startups.csv') 
+X = dataset.iloc[:, :-1].values
+y = dataset.iloc[:, -1].values
+print(X)
+
+# Encoding categorial data
+
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder
+ct = ColumnTransformer(transformers=[('encoder', OneHotEncoder(), [3])],  remainder='passthrough')
+X = np.array(ct.fit_transform(X))
+print(X) //encoding of dataset 3 new columns at the begining
+//we dont have to aplly featuring because in multiple linear regression there is cofficients in each term that will scale them so there is no need of feature scaling
+
+# Splitting the dataset into the trining set and test set
+
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0)
+
+# Training the multiple linear regression model on the training set
+
+Do we have to avoid the dumy variable trap??
+no,the datset we build and train will automatically avoid the trap.
+
+Do we have to work on features like backward elimination having high pvalue??
+no the class we have to build will automatically identify the best features and  predict the high pvalue with highest accuracy.
+
+sklearn library will help you a lot.
+ 
+from sklearn.linear_moel import LinearRegression
+regressor = LinearRegression() //regressor is the object of LinearRegression class
+regrssor.fit(X_train, y_train) //.fit is the method
+
+# Predicting the test set result 
+we cannt plot the graph heare because heare are 5 columns and we can not display it.
+
+y_pred= regressor.predict(X_test)//X test .... not including profit column 
+np.set_printoptions(precision=2)//display any numerical value after decimal only 2 values
+print(np.concatenate((y_pred.reshape(len(y_pred),1),y_test.reshape(len(y_test),1)),1))
 
 
+//concatenate 2 vectors tuple of arrays or vectors u want to concatenate having same shape,meaning same number of profit becuase we want print them vertically not horizontally use reshape enter no of columns use length function y pred and ,1 means one column so this is for the fist element now we want to concate the next vector with real profits using y_test
 
+0 means horizontal conctenation and 1 means vertical.
 
+after running the program,,
+left side we have the vectors of predicted profit nd at the right side we have real profit and now compare them some are very close predictions and some are okay.
 
+# Polynomial Regression
 
+*y=b0+b1x1+b2(x1)^2+....+bn(x1)^n
 
+so the square will give the parabolic turn in the graph.
+sometimes polynomail regression is really helpful for the pandemics,endemics,etc.
+
+it is also called the polynomial linear regression.
+by seeing the cofficients by this it is linear 
+
+datset consisting of 3 columns first position then level and salary
+build the model using polynomial regresion and by collecting data such as salary havng position from business analyst to CEO.
+
+see through linkedln from how many years and we will predict the salary.
+
+# Importing the libraries
+
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+
+we have very few dataset so we do not split the data as it is so small so we do not apply it here.
+
+# Importing the dataset
+
+dataset = pd.read_csv('Position_Salaries.csv')
+X = dataset.iloc[:, 1:-1].values
+y = dataset.iloc[:, -1].values
+
+# Training the Linear Regression model on the whole dataset
+As linear regression compare it with as polynomial model is much more udapted to this dataset.
+
+from sklearn.linear_model import LinearRegression
+lin_reg = LinearRegression()
+lin_reg.fit(X, y)
+//we have build simple linear regression.
+now we will build ultiple linear regression with the powers and also integrate the powers in linear regression.
+
+# Training the Polynomial Regression model on the whole dataset
+
+from sklearn.preprocessing import PolynomialFeatures
+poly_reg = PolynomialFeatures(degree=4)//degree =4 is used here for
+X_poly = poly_reg.fit_transform(X) //fit_tranform will help matrix feature one into converting the new matrix features x1,x1^2,x1^3,x1^4
+lin_reg_2 = LinearRegression()//now we have to add b1,b1,...cofficients 
+lin_reg_2.fit(X_poly,y)//now u have build the polynomial linear regression
+
+# Visualising the Linear Regression results
+
+plt.scatter(X,y,color= 'red')//displat 2d plot conataining the real results..here for eg : X position level y is predicted salaries.
+plt.plot(X, lin_reg.predict(X),color = 'blue')//actully going to plot the blue line 
+plt.title('Truth or Bluff (Linear Regression)')
+plt.xlabel('Position Level')
+plt.ylabel('Salary')
+plt.show()
+
+# Visualising the Polynomial Regression results
+
+plt.scatter(X, y, color = 'red')
+plt.plot(X, lin_reg_2.predict(poly_reg.fit_transform(X)), color = 'blue')//x is simple linearregressor so we use poly_reg
+plt.title('Truth or Bluff (Polynomial Regression)')
+plt.xlabel('Position level')
+plt.ylabel('Salary')
+plt.show()
+//and now we got the regression curve comes near the real salaries as compare from the before one.
+if n=2 and if we increase the power it will be more accurate for eg with degree 4 it will be so accurate. But it is not smooth curve .
+
+# Visualising the Polynomial Regression results (for higher resolution and smoother curve)
+
+X_grid = np.arange(min(X), max(X), 0.1)//instead of taking integers 1,2,3.....we will incrase the density .1,.2,.3,......
+X_grid = X_grid.reshape((len(X_grid), 1))
+plt.scatter(X, y, color = 'red')
+plt.plot(X_grid, lin_reg_2.predict(poly_reg.fit_transform(X_grid)), color = 'blue')
+plt.title('Truth or Bluff (Polynomial Regression)')
+plt.xlabel('Position level')
+plt.ylabel('Salary')
+plt.show()
+
+# Predicting a new result with Linear Regression
+we will predict the salary first with linear regression and second with multiplt regression.
+
+lin_reg.predict([[6.5]])//predict the salary of position 6.5 we have to input the the number then input it with array conatining [[]]it means 2d aarray 1 is for row and second for column
+. Before execute we check the salary and from this the prediction is over the real, so it is wrong.
+
+# Predicting a new result with Polynomial Regression
+
+lin_reg_2.predict(poly_reg.fit_transform([[6.5]]))
+
+//and now we got the predicted salary from polynomial regression which is super close to the the real dataset salary.
