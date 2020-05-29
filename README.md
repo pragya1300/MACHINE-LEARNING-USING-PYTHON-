@@ -475,3 +475,26 @@ lin_reg.predict([[6.5]])//predict the salary of position 6.5 we have to input th
 lin_reg_2.predict(poly_reg.fit_transform([[6.5]]))
 
 //and now we got the predicted salary from polynomial regression which is super close to the the real dataset salary.
+
+# SVR support_vector_regression
+
+invented by vladmir vapnik 
+learn about support vector machine and support vector regression
+
+we will plot a graph of having the simple linear regression and plot accordingly ordinary least squares sum(y-y1)->min
+now having another graph with same dots having regression line in between and having a tube with width ephsiln on both side think it is it of as error line 
+and the area falls between wll hving a buffer of error and we dont care about error for these co ordinates but the coordinates that fall outside the ephsiln insensitive tubes , these and we care about these buffers so the co ordinates or ponts which are below the tube denoted as c*  and the points above the tube denoted as c these variable are slack variables and we care about them as they have error so we use formula:
+
+and all the points are the 2d vectors the outside ones are supporting vectors.
+
+
+
+
+
+
+
+
+
+
+
+
